@@ -1,0 +1,34 @@
+<div ng-controller="formController">
+    <div class="mrg-top50">
+        <form name="multipleSelectForm" novalidate ng-show="!hideForm">
+            <div ng-class="{'has-error' : multipleSelectForm.multipleSelect.$invalid && multipleSelectForm.multipleSelect.$dirty, 'has-success' : !multipleSelectForm.multipleSelect.$invalid && multipleSelectForm.multipleSelect.$dirty}">
+                <label>Categories</label>
+                <multiple-autocomplete ng-model="selectedCategories" name="multipleSelect" required="true"
+                                       object-property="title"
+                                       suggestions-arr="categoriesArr">
+                </multiple-autocomplete>
+                <span ng-if="multipleSelectError">
+                        <p class="error-msg" ng-show="multipleSelectForm.multipleSelect.$error.required">Please select something from multiple select field</p>
+                </span>
+                <label>Email</label>
+                <input type="email" name="input" class="form-control form-control-email" ng-model="userEmail"
+                       required>
+                <span ng-if="emailError">
+                    <p class="error-msg" ng-show="multipleSelectForm.input.$error.required">Choose email</p>
+                    <p class="error-msg" ng-show="multipleSelectForm.input.$error.email">Not valid email</p>
+                </span>
+                <label for="daterange2" class="control-label">Date range</label>
+                <input date-range-picker id="daterange2" name="daterange2" class="form-control date-picker" type="text"
+                       min="dateMin" max="dateMax" ng-model="date" options="dateOpts"
+                       required/>
+                <span ng-if="dateError">
+                    <p class="error-msg" ng-show="multipleSelectForm.daterange2.$error.required">Choose date range</p>
+                </span>
+
+            </div>
+            <br/>
+            <button type="button" class="btn btn-default" ng-click="onSubmit()">Submit</button>
+        </form>
+        <h2>{{ message }}</h2>
+    </div>
+</div>

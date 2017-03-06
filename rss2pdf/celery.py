@@ -1,0 +1,22 @@
+import os
+
+from celery import Celery
+
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rss2pdf.settings')
+
+from django.conf import settings
+
+app = Celery('rss2pdf')
+
+app.conf.beat_schedule = {
+    'planner': {
+        'task': 'app.tasks.get_articles',
+        'schedule': 20.0,
+    },
+}
+
+# Using a string here means the worker will not have to
+# pickle the object when using Windows.
+app.config_from_object('django.conf:settings')
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
