@@ -48,7 +48,7 @@ class MyFormView(FormView):
         email = form.cleaned_data['email']
         categories = form.data['categories']
         date1 = form.cleaned_data['date1']
-        date2 = form.cleaned_data['date2']
+        date2 = form.cleaned_data['date2'].replace(hour=23, minute=59, second=59)
         process_pdf.delay(email, categories, date1, date2)
         articles_count = Article.objects.filter(date__range=(date1, date2), category_id__in=categories).count()
         return HttpResponse(json.dumps({
